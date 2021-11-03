@@ -1,0 +1,12 @@
+Step 1: Start
+Step 2: Declare Variable sum, temp, num
+Step 3: Read num from User
+Step 4: Initialize Variable sum=0 and temp=num
+Step 5: Repeat Until num>=0
+            5.1 sum=sum + cube of last digit i.e [(num%10)*(num%10)*(num%10)]
+            5.2 num=num/10
+Step 6: IF sum==temp
+            Print "Armstrong Number"
+        ELSE 
+            Print "Not Armstrong Number"
+Step 7: Stop
