@@ -1,0 +1,15 @@
+Step 1: Start
+Step 2: Declare and initialise the variable i and count
+Step 3: use while loop
+Step 4: take marks values from the user
+Step 5: count++
+Step 6: if(count==3)
+          print "passed"
+Step 7:else if(count==2)
+          print "promoted"
+Step 8:else if(count==1)
+          print "failed"
+
+
+
+
