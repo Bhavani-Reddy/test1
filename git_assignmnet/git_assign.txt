@@ -1,0 +1,99 @@
+//SECTION 0
+
+$ mkdir project_dir
+$ cd project_dir
+$ git init
+$ touch index.html
+$ git status
+$ git add index.html
+$ git commit -m "commiting html file called index"
+$ touch info.txt
+$ git status
+$ touch .gitignore
+$ git status
+$ git add index.html
+$ git commit -m "commited index with <head>"
+$ git log
+$ git checkout -- .
+$ git add index.html
+$ git status
+$ git restore --staged index.html
+$ git status
+$ git config --global alias.my-add add
+$ git my-add index.html
+$ git commit -m "commited index.html acc to steps"
+$ git status
+$ git log
+$ git revert 30832b3cfdac924387451a43448dffb891e3f359
+
+//SECTION 1
+
+$ mkdir Assignments
+$ cd Assignments
+$ touch README.txt
+$ git add .
+$ git commit -m "committed readme"
+$ git branch html-assignments
+$ git checkout html-assignments
+$ git add .
+$ git commit -m "modified html"
+$ git checkout master
+$ git add .
+$ git commit -m "modified txt"
+$ git checkout html-assignments
+$ git add .
+$ git commit -m "modified html 2nd time"
+$ git checkout master
+$ git merge html-assignments
+$ git branch -D html-assignments
+
+//SECTION 2
+
+$ git branch css-assignments
+$ git checkout css-assignments
+$ git add .
+$ git commit -m "inittial css commit"
+$ ls
+$ git add .
+$ git commit -m "change in readme txt file"
+$ git checkout master
+$ git add .
+$ git commit -m "change in readme txt file in master"
+$ git checkout css-assignments
+$ git add .
+$ git commit -m "minor css commit"
+$ git checkout master
+$ git add .
+$ git commit -m "commit manually resolve merge"
+$ git status
+$ git merge css-assignments
+$ git branch -D css-assignments
+
+//SECTION 3
+
+$ git branch js-assignments
+$ git checkout js-assignments
+$ git add .
+$ git commit -m "initial commit in branch"
+$ git add .
+$ git commit -m "committed changes in readme of branch"
+$ git checkout master
+$ git add .
+$ git commit -m "committed changes in readme of master"
+$ git checkout js-assignments
+$ git add .
+$ git commit -m "commit changes in js file of branch"
+$ git checkout master
+$ git merge js-assignments
+$ git add .
+$ git commit -m "commit manually resolve merge"
+$ git merge js-assignments
+$ git branch -D js-assignments
+
+
+
+
+
+
+
+
