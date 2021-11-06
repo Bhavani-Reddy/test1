@@ -1,0 +1,178 @@
+//2nd question - Program that describes hierarchy of organisation//
+class Employee
+{
+	void sal()
+	{
+		
+	}
+}
+class Manager extends Employee
+{
+	int salary;
+	int incentive;
+	Manager(int salary,int incentive)
+	{
+		this.salary=salary;
+		this.incentive=incentive;
+		
+	}
+	public void sal()
+	{
+		System.out.println("the salary of manager is: "+(salary+incentive));
+	}
+}
+class Labour extends Employee
+{
+	int lab_salary;
+	int overtime;
+	Labour(int lab_salary,int overtime)
+	{
+		this.lab_salary=lab_salary;
+		this.overtime=overtime;
+		
+	}
+	public void sal()
+	{
+		System.out.println("the salary of labour is: "+(lab_salary+overtime));
+	}
+}
+public class MainEmp
+{
+	public static void main(String[] args)
+	{
+		Manager m = new Manager(15000,5000);
+		Labour l = new Labour(1000,500);
+		m.sal();
+		l.sal();
+	}
+
+}
+
+
+//3rd question - Total amount in the bank
+
+
+class Savings
+{
+	double fixDeposit;
+	double bal;
+	Savings(double fixDeposit, double bal)
+	{
+		this.bal=bal;
+		this.fixDeposit = fixDeposit;	
+	}
+	public double totalAmt()
+	{
+		 double currentbal=fixDeposit+bal;
+	     return currentbal;
+	}
+}
+class Current 
+{
+    double cashCredit;
+    double bal;
+	Current(double cashCredit,double bal)
+	{
+		this.cashCredit = cashCredit;
+		this.bal=bal;
+	}
+	public double totalAmt()
+	{
+		 double savingsbal=cashCredit+bal;
+		 return savingsbal;
+	}
+}
+public class MainBank {
+      public static void main(String[] args)
+      {  
+        Savings s = new Savings(1000,550);
+     	Current c =new Current(10000,450);
+     	double totalbankbalance = s.totalAmt()+c.totalAmt();
+     	System.out.println("Total bank balance is : "+totalbankbalance);
+     	
+	}
+}
+
+
+
+//5th question - Draw all shapes//
+
+abstract class Shape
+{
+		abstract void draw();		
+}
+class Line extends Shape
+{
+	public void draw()
+	{
+		System.out.println("Draw a line of cm 15");
+	}
+}
+class Rectangle extends Shape
+{
+	public void draw()
+	{
+		System.out.println("Draw a rectangle of lendth 10 breadth 15");
+	}
+}
+class Cube extends Shape
+{
+	public void draw()
+	{
+		System.out.println("Draw a cube");
+	}
+}
+class MainShape
+{
+	public static void main(String[] args)
+	{
+		Line l = new Line();
+		Rectangle r = new Rectangle();
+		Cube c = new Cube();
+		l.draw();
+		r.draw();
+		c.draw();
+		
+	}
+}
+
+//6th question-Object creation of abstract class
+
+abstract class Persistance
+{
+	abstract void persist();
+}
+class FilePersistance extends Persistance
+{
+	public void persist()
+	{
+	System.out.println("file persistance");	
+	}
+}
+class DatabasePersistance extends Persistance
+{
+	public void persist()
+	{
+		System.out.println("database persistance");
+	}
+}
+public class MainPresi
+{
+  public static void main(String[] args)
+  {
+	 
+	  Persistance p = new Persistance() 
+	 {
+		 public void persist()
+		 {
+			 System.out.println("the mainpersi is invoking the persist method without "
+			 		+ "knowing that data is saved in file or database");
+		 }
+	};
+		
+		p.persist();
+
+}
+}
+
+//
