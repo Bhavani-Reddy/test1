@@ -1,0 +1,100 @@
+//5.calculating income tax
+
+Step1 : take input from user i.e annual income
+Step2 : Store it in a variable
+Step3 : take if conditions and check the values according to the given conditions like
+         if((sal>0)&&(sal<180000)
+           tax=0.0
+         else if((sal>181001)&&(sal<300000)
+           tax=sal*0.1
+         else if((sal>300001)&&(sal<500000)
+           tax=sal*0.2
+         else if((sal>500001)&&(sal<1000000)
+           tax=sal*0.3
+Step4 : print tax
+
+
+//6.validate login for the user
+
+Step1 : In main method take the password username from the user.
+Step2 : Declare and initialise 2 string variables with the username and password
+Step3 : take if(attemps!=3)
+Step4 : inside if take one more if and check the password and username
+Step5 : if if statement satisfies give "Welcome"
+Step6 : if if statement fails to satisfy then go to else part where it shows "invalid login" the attempts
+Step7 : if statement should be executed until attempts gets equal to 3
+Step8 : if attempts are equal to 3 then give "login limit exceeded
+Step9 : This will terminate the program.
+
+//7.Search element in array
+
+Step1 : Take the elements for array from the user
+Step2 : Store the values in the array by using for loop
+Step3 : take a boolean variable default as false
+Step4 : take the element to be serached from the user
+Step5 : compare each element in the array with the element which is needed
+Step6 : update the boolean value to true when it is found
+Step7 : by using if(check==true)
+                 print "element found"
+Step8 : else 
+          print "element not found"
+
+//8.Bubble sort
+import java.io.*;
+import java.util.*;
+import java.lang.Math;
+public class BubbleSort
+{	
+static void bubbleSort(int a[],int key)	
+{
+int i,j,temp;
+boolean found=false;
+for(i=0;i<14;i++)		
+{
+for(j=0;j<(14-i);j++)			
+{		
+if(a[j] > a[j+1])				
+{				
+temp=a[j];			
+a[j]=a[j+1];			
+a[j+1]=temp;				
+}			
+}		
+}
+for(i=0;i<15;i++)		
+{	
+if(a[i]==key)			
+{			
+found=true;
+System.out.println("Key " + key + " found in the array");			
+break;			
+}		
+}
+if(found==false)		
+{
+System.out.println("Key " + key + " not found in the array");		
+}	
+}
+public static void main(String[] args)	
+{
+Scanner sc=new Scanner(System.in);
+int a[]=new int[15];	
+int i,key;
+System.out.println("Enter 15 elements in the array: ");
+for(i=0;i<15;i++)		
+{	
+a[i]=sc.nextInt();		
+}
+System.out.println("Enter the element to be searched: ");
+key=sc.nextInt();
+bubbleSort(a,key);	
+}
+}
+
+//9.Find total and average 
+
+Step1 : Declare 3 variables 
+Step2 : Take the 3 values from the user
+Step3 : Calculate total by adding 3 variables
+Step4 : Calculate average by dividing the total by 3
+Step5 : print total and average
