@@ -1,230 +1,133 @@
-Mongo DB Assignment – 1
+Mongo DB Assignment – 2
+Atlanta Population:
+1.	Use db.zipcodes.fimd() to filter results to only the results where city is ATLANTA and state is GA.
+db.zipcodes.find({city:"ATLANTA",state:"GA"})
+2.	Use db.zipcodes.aggregate with $match to do the same as above.
+db.zipcodes.aggregate([{$match:{city:"ATLANTA",state:"GA"}}])
+3.	Use $group to count the number of zip codes in Atlanta.
+db.zipcodes.aggregate([{$match:{city:"ATLANTA"}},{$group:{_id:"$city",count_field:{$sum:1}}}])
+[ { _id: 'ATLANTA', count_field: 41 } ]
+4.	Use $group to find the total population in Atlanta.
+db.zipcodes.aggregate([{$match:{city:"ATLANTA"}},{$group:{_id:"$city",total_pop:{$sum:"$pop"}}}])
+[ { _id: 'ATLANTA', total_pop: 630046 } ]
 
-Query/find Documents:
-1.	To get all the documents:
-db.movies.find()
-2.	To get all the documents with writer set to “Quentin Tarantino”:
-db.movies.find({writer :"Quentin Tarantino"})
-3.	To get all the documents where actors include “Brad Pitt”:
-db.movies.find({actors:'Brad Pitt'}) 
-4.	To get all the documents with franchise set to “The Hobbit”:
-db.movies.find({Franchise:"The Hobbit"}) 
-5.	To get all movies released in the 90s:
-db.movies.find({$and:[{year:{$gt:1990}},{year:{$lt$lt:2000}}]})
-6.	To get movies released before the year 2000 or after 2010:
-db.movies.find({$or:[{year:{$lt:2000}},{year:{$gt:2010}}]})
+Populations By State:
+1.	Use aggregate to calculate the total population for each state.
+db.zipcodes.aggregate([{$group:{_id:'$state',total_pop:{$sum:"$pop"}}}])
+[
+  { _id: 'VT', totalpop: 562758 },
+  { _id: 'DC', totalpop: 606900 },
+  { _id: 'AL', totalpop: 4040587 },
+  { _id: 'NC', totalpop: 6628637 },
+  { _id: 'WI', totalpop: 4891769 },
+  { _id: 'OK', totalpop: 3145585 },
+  { _id: 'AZ', totalpop: 3665228 },
+  { _id: 'NV', totalpop: 1201833 },
+  { _id: 'HI', totalpop: 1108229 },
+  { _id: 'UT', totalpop: 1722850 },
+  { _id: 'TN', totalpop: 4876457 },
+  { _id: 'DE', totalpop: 666168 },
+  { _id: 'IN', totalpop: 5544136 },
+  { _id: 'SD', totalpop: 695397 },
+  { _id: 'MT', totalpop: 798948 },
+  { _id: 'NJ', totalpop: 7730188 },
+  { _id: 'KS', totalpop: 2475285 },
+  { _id: 'WA', totalpop: 4866692 },
+  { _id: 'MO', totalpop: 5110648 },
+  { _id: 'WY', totalpop: 453528 }
+]
+2.	Sort the results by population, highest first.
+db.zipcodes.aggregate([{$group:{_id:"$state",total_pop:{$sum:"$pop"}}},{$sort:{total_pop:-1}}])
+[
+  { _id: 'CA', total_pop: 29754890 },
+  { _id: 'NY', total_pop: 17990402 },
+  { _id: 'TX', total_pop: 16984601 },
+  { _id: 'FL', total_pop: 12686644 },
+  { _id: 'PA', total_pop: 11881643 },
+  { _id: 'IL', total_pop: 11427576 },
+  { _id: 'OH', total_pop: 10846517 },
+  { _id: 'MI', total_pop: 9295297 },
+  { _id: 'NJ', total_pop: 7730188 },
+  { _id: 'NC', total_pop: 6628637 },
+  { _id: 'GA', total_pop: 6478216 },
+  { _id: 'VA', total_pop: 6181479 },
+  { _id: 'MA', total_pop: 6016425 },
+  { _id: 'IN', total_pop: 5544136 },
+  { _id: 'MO', total_pop: 5110648 },
+  { _id: 'WI', total_pop: 4891769 },
+  { _id: 'TN', total_pop: 4876457 },
+  { _id: 'WA', total_pop: 4866692 },
+  { _id: 'MD', total_pop: 4781379 },
+  { _id: 'MN', total_pop: 4372982 }
+]
+3.	Limit the result to just the first 3 results. What are the top 3 states in population?
+db.zipcodes.aggregate([{$group:{_id:"$state",total_pop:{$sum:"$pop"}}},{$sort:{total_pop:-1}},{$limit:3}])
+[
+  { _id: 'CA', total_pop: 29754890 },
+  { _id: 'NY', total_pop: 17990402 },
+  { _id: 'TX', total_pop: 16984601 }
+]
+Populations By City:
+1.	Use aggregation to calculate total population for each city.
+db.zipcodes.aggregate([{$group:{_id:"$city",total_pop:{$sum:"$pop"}}}])
+[
+  { _id: 'LARTO', total_pop: 5507 },
+  { _id: 'HORNELL', total_pop: 14311 },
+  { _id: 'CALIFORNIA', total_pop: 20914 },
+  { _id: 'WELLS BRIDGE', total_pop: 232 },
+  { _id: 'HARROD', total_pop: 4897 },
+  { _id: 'CAPUTA', total_pop: 578 },
+  { _id: 'ALDER CREEK', total_pop: 74 },
+  { _id: 'WILCOX', total_pop: 2390 },
+  { _id: 'KEELING', total_pop: 2651 },
+  { _id: 'HARRELLSVILLE', total_pop: 1046 },
+  { _id: 'WARREN', total_pop: 276817 },
+  { _id: 'RECTOR', total_pop: 3891 },
+  { _id: 'HAVILAND', total_pop: 1936 },
+  { _id: 'MAZA', total_pop: 1800 },
+  { _id: 'EROS', total_pop: 2296 },
+  { _id: 'SPRING GLEN', total_pop: 288 },
+  { _id: 'BIG CABIN', total_pop: 2634 },
+  { _id: 'SAN SIMEON', total_pop: 500 },
+  { _id: 'ANTIOCH', total_pop: 123107 },
+  { _id: 'GENTRY', total_pop: 5401 }
+]
+2.	Sort the results by population, highest first.
+db.zipcodes.aggregate([{$group:{_id:"$city",total_pop:{$sum:"$pop"}}},{$sort:{total_pop:-1}}])
+[
+  { _id: 'CHICAGO', total_pop: 2452177 },
+  { _id: 'BROOKLYN', total_pop: 2341387 },
+  { _id: 'HOUSTON', total_pop: 2123053 },
+  { _id: 'LOS ANGELES', total_pop: 2102295 },
+  { _id: 'PHILADELPHIA', total_pop: 1639862 },
+  { _id: 'NEW YORK', total_pop: 1476790 },
+  { _id: 'BRONX', total_pop: 1209548 },
+  { _id: 'SAN DIEGO', total_pop: 1054316 },
+  { _id: 'DALLAS', total_pop: 999042 },
+  { _id: 'DETROIT', total_pop: 967468 },
+  { _id: 'PHOENIX', total_pop: 902249 },
+  { _id: 'MIAMI', total_pop: 848436 },
+  { _id: 'COLUMBUS', total_pop: 825448 },
+  { _id: 'SAN JOSE', total_pop: 817497 },
+  { _id: 'SAN ANTONIO', total_pop: 813188 },
+  { _id: 'WASHINGTON', total_pop: 780954 },
+  { _id: 'BALTIMORE', total_pop: 738846 },
+  { _id: 'JACKSONVILLE', total_pop: 735505 },
+  { _id: 'SAN FRANCISCO', total_pop: 723993 },
+  { _id : 'CLEVELAND', total_pop: 687451 }
+]
+3.	Limit the results to just the first 3 results. What are the top 3 cities in population?
+db.zipcodes.aggregate([{$group:{_id:"$city",total_pop:{$sum:"$pop"}}},{$sort:{total_pop:-1}},{$limit:3}])
+[
+  { _id: 'CHICAGO', total_pop: 2452177 },
+  { _id: 'BROOKLYN', total_pop: 2341387 },
+  { _id: 'HOUSTON', total_pop: 2123053 }
+]
+4.	What are the top 3 cities in population in Texas?
+db.zipcodes.aggregate([{$match:{state:"TX"}},{$group:{_id:"$city",total_pop:{$sum:"$pop"}}},{$sort:{total_pop:-1}},{$limit:3}])
+[
+  { _id: 'HOUSTON', total_pop: 2095918 },
+  { _id: 'DALLAS', total_pop: 940191 },
+  { _id: 'SAN ANTONIO', total_pop: 811792 }
+]
 
-Text Search:
-I.	Find all movies that have a synopsis  that contains the word “Bilbo”.
-•	db.movies.getIndexes()
-•	db.movies.createIndex({synopsis:"text"})
-•	db.movies.getIndexes()
-•	db.movies.find({$text:{$search:"Bilbo"}})
-or
-•	db.movies.find({synopsis:/Bilbo/g})
-II.	Find all movies that have a synopsis that contains the word “Gandalf”.
-db.movies.find({$text:{$search:"Gandalf"}})
-III.	Find all movies that have synopsis that contains the word “Bilbo” and not the word “Gandalf”.
-db.movies.find({$text:{$search:"bilbo -gandlf"}})
-IV.	Find all movies that have a synopsis that contains the word “dwarves” or “hobbit”.
-db.movies.find({$text:{$search:"dwarves hobbit"}})
-V.	Find all movies that have a synopsis that contains the word “gold” and “dragon”.
-db.movies.find({$text:{$search:"gold +dragon"}})
-
-Delete Documents:
-a)	Delete the movie “Pee Wee Herman’s big Adventure”
-db.movies.remove({title:"Pee Wee Herman's Big Adventure"})
-b)	Delete the movie “Avatar”
-db.movies.remove({title:"Avatar"})
-
-Relationships:
-Inserting documents into the users collection:
-•	db.users.insertOne({username:"GoodGuyGrey",first_name:"GoodGuy",last_name:"Grey"})
-•	db.users.insertOne({username:"ScumbagSteve",full_name:[{first:"Scumbag",last:"Steve"}]})
-•	db.users.find()
-[
-  {
-    _id: ObjectId("617e5426c4057dd5ea3716d3"),
-    username: 'GoodGuyGrey',
-    first_name: 'GoodGuy',
-    last_name: 'Grey'
-  },
-  {
-    _id: ObjectId("617e54a8c4057dd5ea3716d4"),
-    username: 'ScumbagSteve',
-    full_name: [ { first: 'Scumbag', last: 'Steve' } ]
-  }
-]
-Inserting documents into the posts collection:
-•	db.posts.insertMany([{username:"GoodGuyGrey",titletitle:"Passes out at party",body:"Wakes up early and cleans house"},{username:"GoodGuyGrey",title:"Steals your identity",body:"Raises your credit score"},{username:"GoodGuyGrey",title:"Reports a bug in your code",body:"Sends you a Pull Request"}])
-•	db.posts.insertMany([{username:"ScumbagSteve",titletitle:"Borrows something",body:"Sells it"},{username:"ScumbagSteve",title:"Borrows everything",body:"The end"},{username:"ScumbagSteve",title:"Forks your repo on github",body:"Sets to private"}])
-•	db.posts.find()
-[
-  {
-    _id: ObjectId("617e58c5c4057dd5ea3716de"),
-    username: 'GoodGuyGrey',
-    titletitle: 'Passes out at party',
-    body: 'Wakes up early and cleans house'
-  },
-  {
-    _id: ObjectId("617e58c5c4057dd5ea3716df"),
-    username: 'GoodGuyGrey',
-    title: 'Steals your identity',
-    body: 'Raises your credit score'
-  },
-  {
-    _id: ObjectId("617e58c5c4057dd5ea3716e0"),
-    username: 'GoodGuyGrey',
-    title: 'Reports a bug in your code',
-    body: 'Sends you a Pull Request'
-  },
-  {
-    _id: ObjectId("617e58e0c4057dd5ea3716e1"),
-    username: 'ScumbagSteve',
-    titletitle: 'Borrows something',
-    body: 'Sells it'
-  },
-  {
-    _id: ObjectId("617e58e0c4057dd5ea3716e2"),
-    username: 'ScumbagSteve',
-    title: 'Borrows everything',
-    body: 'The end'
-  },
-  {
-    _id: ObjectId("617e58e0c4057dd5ea3716e3"),
-    username: 'ScumbagSteve',
-    title: 'Forks your repo on github',
-    body: 'Sets to private'
-  }
-]
-Inserting documents into the comments collection:
-•	db.comments.insertOne({username:"GoodGuyGrey",comment:"Hope you got a good deal!",post: ObjectId("617e58e0c4057dd5ea3716e1")})
-•	db.comments.insertOne({username:"GoodGuyGrey",comment:"What mine is yours",post: ObjectId("617e58e0c4057dd5ea3716e2")})
-•	db.comments.insertOne({username:"GoodGuyGrey",comment:"Don't voilate the licensing agreement!",post: ObjectId("617e58e0c4057dd5ea3716e3")})
-•	db.comments.insertOne({username:"ScumbagSteve",comment:"It still isn't clean",post: ObjectId("617e58c5c4057dd5ea3716de")})
-•	db.comments.insertOne({username:"ScumbagSteve",comment:"Denied your PR cause I found a hack",post: ObjectId("617e58c5c4057dd5ea3716e0")})
-•	db.comments.find()
-[
-  {
-    _id: ObjectId("617e59c0c4057dd5ea3716e5"),
-    username: 'GoodGuyGrey',
-    comment: 'Hope you got a good deal!',
-    post: ObjectId("617e58e0c4057dd5ea3716e1")
-  },
-  {
-    _id: ObjectId("617e5bcbc4057dd5ea3716e6"),
-    username: 'GoodGuyGrey',
-    comment: 'What mine is yours',
-    post: ObjectId("617e58e0c4057dd5ea3716e2")
-  },
-  {
-    _id: ObjectId("617e5e18c4057dd5ea3716e7"),
-    username: 'GoodGuyGrey',
-    comment: "Don't voilate the licensing agreement!",
-    post: ObjectId("617e58e0c4057dd5ea3716e3")
-  },
-  {
-    _id: ObjectId("617e5e68c4057dd5ea3716e8"),
-    username: 'ScumbagSteve',
-    comment: "It still isn't clean",
-    post: ObjectId("617e58c5c4057dd5ea3716de")
-  },
-  {
-    _id: ObjectId("617e5eb0c4057dd5ea3716e9"),
-    username: 'ScumbagSteve',
-    comment: 'Denied your PR cause I found a hack',
-    post: ObjectId("617e58c5c4057dd5ea3716e0")
-  }
-]
-Querying related collections:
-1)	Find all users
-db.users.find()
-2)	Find all posts
-db.posts.find()
-3)	Find all posts that was authored by “GoodGuyGreg”
-db.posts.find({username:"GoodGuyGrey"})
-[
-  {
-    _id: ObjectId("617e58c5c4057dd5ea3716de"),
-    username: 'GoodGuyGrey',
-    titletitle: 'Passes out at party',
-    body: 'Wakes up early and cleans house'
-  },
-  {
-    _id: ObjectId("617e58c5c4057dd5ea3716df"),
-    username: 'GoodGuyGrey',
-    title: 'Steals your identity',
-    body: 'Raises your credit score'
-  },
-  {
-    _id: ObjectId("617e58c5c4057dd5ea3716e0"),
-    username: 'GoodGuyGrey',
-    title: 'Reports a bug in your code',
-    body: 'Sends you a Pull Request'
-  }
-]
-4)	Find all posts that was authored by “ScumbagSteve”
-db.posts.find({username:"ScumbagSteve"})
-[
-  {
-    _id: ObjectId("617e58e0c4057dd5ea3716e1"),
-    username: 'ScumbagSteve',
-    titletitle: 'Borrows something',
-    body: 'Sells it'
-  },
-  {
-    _id: ObjectId("617e58e0c4057dd5ea3716e2"),
-    username: 'ScumbagSteve',
-    title: 'Borrows everything',
-    body: 'The end'
-  },
-  {
-    _id: ObjectId("617e58e0c4057dd5ea3716e3"),
-    username: 'ScumbagSteve',
-    title: 'Forks your repo on github',
-    body: 'Sets to private'
-  }
-]
-5)	Find all comments
-db.comments.find()
-6)	Find all comments that was authored by “GoodGuyGreg”
-db.comments.find({username:"GoodGuyGrey"})
-[
-  {
-    _id: ObjectId("617e59c0c4057dd5ea3716e5"),
-    username: 'GoodGuyGrey',
-    comment: 'Hope you got a good deal!',
-    post: ObjectId("617e58e0c4057dd5ea3716e1")
-  },
-  {
-    _id: ObjectId("617e5bcbc4057dd5ea3716e6"),
-    username: 'GoodGuyGrey',
-    comment: 'What mine is yours',
-    post: ObjectId("617e58e0c4057dd5ea3716e2")
-  },
-  {
-    _id: ObjectId("617e5e18c4057dd5ea3716e7"),
-    username: 'GoodGuyGrey',
-    comment: "Don't voilate the licensing agreement!",
-    post: ObjectId("617e58e0c4057dd5ea3716e3")
-  }
-]
-7)	Find all comments that was authored by “ScumbagSteve”
-db.comments.find({username:"ScumbagSteve"})
-[
-  {
-    _id: ObjectId("617e5e68c4057dd5ea3716e8"),
-    username: 'ScumbagSteve',
-    comment: "It still isn't clean",
-    post: ObjectId("617e58c5c4057dd5ea3716de")
-  },
-  {
-    _id: ObjectId("617e5eb0c4057dd5ea3716e9"),
-    username: 'ScumbagSteve',
-    comment: 'Denied your PR cause I found a hack',
-    post: ObjectId("617e58c5c4057dd5ea3716e0")
-  }
-]
-8)	Find all comments belonging to the post “Reports a bug in your code”
-
-db.comme
