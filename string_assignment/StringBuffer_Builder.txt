@@ -1,0 +1,55 @@
+//appending by StringBuffer
+
+package String_assign;
+
+public class StringBuffer1 {
+  public static void main(String[] args) {
+	  StringBuffer s = new StringBuffer("StringBuffer");
+	  s.append(" ,is a peer class of string ");
+	  s.append(" ,that provides such of , ");
+	  s.append("the functionality of strings ");
+	  System.out.println(s);
+	  
+	
+}
+}
+
+//inserting by StringBuffer
+package String_assign;
+
+public class StringBuffer2 {
+	 public static void main(String[] args) {
+		  StringBuffer s = new StringBuffer("It is used to _ at the specified index position");
+		  s.insert(14," build");
+		  System.out.println(s);
+	 }
+}
+
+
+//reversing by StringBuffer
+package String_assign;
+
+public class StringBuffer3 {
+	 public static void main(String[] args) {
+		  StringBuffer s = new StringBuffer("This method returns the reversed object on which it was called");
+		  System.out.println("++++++++++Orginal String+++++++");
+		  System.out.println(s);
+		  s.reverse();
+		  System.out.println("++++++++++Reversed String+++++++");
+		  System.out.println(s);
+	 }
+}
+
+//reversing by StringBuilder
+package String_assign;
+
+public class StringBuilder1 {
+	 public static void main(String[] args) {
+		  StringBuilder sb = new StringBuilder("This method returns the reversed object on which it was called");
+		  System.out.println("++++++++++Orginal String+++++++");
+		  System.out.println(sb);
+		  sb.reverse();
+		  System.out.println("++++++++++Reversed String+++++++");
+		  System.out.println(sb);
+	 }
+}
