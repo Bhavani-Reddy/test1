@@ -1,3 +1,21 @@
+//singleton class
+
+public class singleton {
+    public static void main(String[] args) {
+        ex object=ex.return_obj();
+    }
+}
+
+class ex{
+    static ex obj= new ex();
+    private ex(){
+
+    }
+    public static ex return_obj(){
+        return obj;
+    }
+}
+
 //2nd question - Program that describes hierarchy of organisation//
 class Employee
 {
