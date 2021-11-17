@@ -1,0 +1,92 @@
+STUDENT CLASS:
+
+package com.test1;
+import javax.annotation.Resource;
+
+import org.springframework.beans.factory.annotation.Required;
+
+public class Student   {
+	
+	private String Studentname;
+	private int Studentage;
+	private Details email;
+	
+	
+	 public Details getEmail() {
+		return email;
+	}
+	 @Resource(name="email")
+	public void setEmail(Details email) {
+		this.email = email;
+	}
+	public Student(String studentname,int Studentage) {
+		super();
+		this.Studentname = studentname;
+		this.Studentage = Studentage;
+		
+	}
+	 @Required
+	public void setStudentname(String studentname) {
+		Studentname = studentname;
+	}
+	public String getName() {
+		return Studentname;
+	}
+	public void getDetails()
+	{
+		System.out.println("The name of the student is: "+getName() );
+		System.out.println("The age of the student is: "+getStudentage() );
+		System.out.println("the email of the student is: "+getEmail().getEmail());
+	}
+	public int getStudentage() {
+		return Studentage;
+	}
+	public void setStudentage(int studentage) {
+		Studentage = studentage;
+	}
+
+	
+}
+
+MAIN CLASS:
+
+package com.test1;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class MainStud {
+
+	public static void main(String[] args) {
+		ApplicationContext context = new ClassPathXmlApplicationContext("stud.xml");
+		((ConfigurableApplicationContext) context).registerShutdownHook();
+		Student obj = (Student) context.getBean("student");
+		obj.getDetails();
+		
+	}
+}
+
+XML FILE:
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+   <beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context-3.0.xsd">     
+       <context:annotation-config/>
+       
+         <bean id ="student" class="com.test1.Student" >
+        <constructor-arg type="String" value="Bhav"/>
+        <constructor-arg type="int" value="21"/>
+        <property name="email" ref="details"/>
+        </bean>
+    
+         <bean id = "details" class ="com.test1.Details" >
+     <constructor-arg type="String" value ="bhav@gmail.com"/>
+ </bean>
+</beans>
