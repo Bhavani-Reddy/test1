@@ -105,6 +105,9 @@ public class Address {
 	
 	
 }
+
+//SETTER INJECTION
+
 <?xml version="1.0" encoding="UTF-8"?>
 
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
@@ -125,6 +128,29 @@ public class Address {
           <property name="country" value="India"/>
           
    </bean>
+</beans>
 
+//CONSTRUCTOR INJECTION
 
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+        
+   <bean id="customer" class="Com.Spring.Customer">
+     <constructor-arg value="123"/>
+    <constructor-arg value="Bhav"/>
+     <constructor-arg value="7093312958"/>   
+    <constructor-arg ref="address"/>    
+   </bean>
+   
+   <bean id="address" class="Com.Spring.Address">
+      <constructor-arg value="10"/>
+       <constructor-arg value="hyd"/>
+        <constructor-arg value="TS"/>
+         <constructor-arg value="500020"/>
+          <constructor-arg value="India"/>        
+   </bean>
 </beans>
