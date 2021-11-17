@@ -1,0 +1,132 @@
+//QUESTION CLASS:
+
+package com.test1;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+public class Question {
+	private int id;
+	private String question;
+	private Set<String> answers;
+	//private List<String> answers;
+	//private Map<Integer , String> answers;
+	
+	// using Map constructor
+/*	public Question(int id, String question, Map<Integer,String> answers) {
+		super();
+		this.id = id;
+		this.question = question;
+		this.answers = answers;
+	}*/
+	
+	//using List constructor
+/*	public Question(int id, String question, List<String> answers) {
+		super();
+		this.id = id;
+		this.question = question;
+		this.answers = answers;
+	}*/
+
+	//using set constructor
+	public Question(int id, String question, Set<String> answers) {
+		super();
+		this.id = id;
+		this.question = question;
+		this.answers = answers;
+	}
+	
+	public void display() {
+		System.out.println("Id : " +id);
+		System.out.println("Question : " +question);
+		System.out.println("Answers : " );
+		
+		//using List
+		Iterator<String> it= answers.iterator();
+		while(it.hasNext()){
+			System.out.println(it.next());
+		}
+	
+		
+		//using Map
+/*               Set<Entry<Integer, String>> map=answers.entrySet();
+		Iterator<Entry<Integer,String>> it= map.iterator();
+		while(it.hasNext()){
+			Entry<Integer,String> entry=it.next();
+			//System.out.println("Qid "+entry.getKey()+ " answer "+entry.getValue()+"");
+			System.out.println(entry);
+		}
+	
+	
+
+		// using Set
+		Iterator<String> it= answers.iterator();
+		while(it.hasNext()){
+			System.out.println(it.next());
+		}
+               }*/
+	}
+}
+
+//MAIN CLASS:
+
+package com.test1;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class MainQues {
+	
+	public static void main(String[] args) {
+     ApplicationContext context= new ClassPathXmlApplicationContext("ques2.xml");
+     Question obj= (Question) context.getBean("test");
+     obj.display();
+	}
+
+}
+
+XML FILE:
+
+<?xml version="1.0" encoding="UTF-8"?>
+<beans  xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+      
+      
+         
+  <bean id="test" class="com.test1.Question"    >
+          <constructor-arg  value="123" />
+          <constructor-arg  value="what is cryptocurrency?"  />
+          
+          
+          <!-- using Map -->
+  <!--  <constructor-arg>
+      <map>
+       <entry key="1"    value= "it is a type of currency which uses digital files as money" ></entry>
+       <entry key="2"      value= "the files are created using the same ways as cryptography"></entry>
+       <entry key="3"      value="it is a digital assets" ></entry>
+      </map>
+     </constructor-arg> -->
+     
+     <!-- using List 
+     <constructor-arg>
+      <list>
+        <value>it is a type of currency which uses digital files as money</value>
+        <value>the files are created using the same ways as cryptography</value>
+         <value>it is a digital assets</value>
+          </list> 
+          </constructor-arg>  -->
+   
+          
+          <!-- using set -->
+        <constructor-arg>
+            <set>
+        <value>it is a type of currency which uses digital files as money</value>
+        <value>the files are created using the same ways as cryptography</value>
+         <value>it is a digital assets</value>
+          </set>   
+           </constructor-arg> 
+           
+            </bean>
+   </beans>
