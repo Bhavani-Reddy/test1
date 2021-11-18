@@ -48,6 +48,27 @@ public class Student   {
 	
 }
 
+package com.test1;
+
+public class Details {
+	
+	private String email;
+	
+	
+	public Details(String email) {
+		super();
+		this.email = email;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
+}
+
+
 MAIN CLASS:
 
 package com.test1;
