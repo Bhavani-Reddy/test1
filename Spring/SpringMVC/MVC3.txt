@@ -1,0 +1,122 @@
+UESRCONTROLLER:
+
+package AssiSpringMVC;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import springMVC.LoginService;
+
+@Controller
+public class User {
+
+	LoginService service = new LoginService();
+	
+	@RequestMapping(value ="/login2", method = RequestMethod.GET)
+	public String showLoginPage() {
+		return "login";
+	}
+	@RequestMapping(value ="/login2", method = RequestMethod.POST)
+	public String handleLoginRequest(@RequestParam String name, @RequestParam String password, ModelMap model) {
+		if(!service.validateUser(name, password))
+		{
+			model.put("errorMessage", "Invalid Credentials!!!");
+			return "error";
+		}
+		else
+		{
+			model.put("name", name);
+			model.put("password", password);
+			return "success";
+		}
+	}
+}
+
+LOGIN.JSP:
+
+<%@page import="java.util.Date"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Yahooo!!!!!!!! from JSP</title>
+</head>
+<%
+System.out.println(request.getParameter("name"));
+Date date = new Date();
+%>
+<div>
+Current date is <%=date %>
+</div>
+<body>
+<form action="/spring-mvc/login2" method ="POST">
+<p><font color="red">${errorMessage}</font></p>
+name: <input name="name" type="text" />
+Password:<input name="password" type="password" /> 
+<input type="Submit"/>
+</form> 
+</body>
+</html>
+
+
+SUCCESS.JSP:
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>success</title>
+</head>
+<body>
+Authenticated Successfully!!
+</body>
+</html>
+
+
+ERROR.JSP
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>error</title>
+</head>
+<body>
+<form action="/spring-mvc/login2">
+<p><font color="red">${errorMessage}</font></p>
+</form>
+</body>
+</html>
+
+TODO-SERVLET.XML
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="AssispringMVC" />
+
+    <mvc:annotation-driven />
+    
+    <bean
+        class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix">
+            <value>/WEB-INF/views/</value>
+        </property>
+        <property name="suffix">
+            <value>.jsp</value>
+        </property>
+    </bean>
+    
+</beans>
