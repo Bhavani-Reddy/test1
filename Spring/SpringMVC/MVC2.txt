@@ -1,0 +1,63 @@
+SIMPLEINTERESTCONTROLLER:
+
+package AssiSpringMVC;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+
+	@Controller
+	public class SimpleInstrestController {
+		
+		@RequestMapping(value = "/run1", method = RequestMethod.GET)
+		public String showLoginPage() {
+			return "SimpleInterest";
+		}
+		
+	   	    @RequestMapping(value = "/run1", method = RequestMethod.POST)
+	      public String soutput(@RequestParam int principal, @RequestParam int time, @RequestParam int rate,ModelMap Model) {
+	    	double si = (principal *time  *rate )/100;
+	    	Model.put("P", principal);
+	    	Model.put("T", time);
+	    	Model.put("R", rate);
+	        Model.put("si", si);
+	        return "welcome";
+	         
+	       }
+	}
+
+
+
+SIMPLEINTEREST.JSP:
+
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+    pageEncoding="ISO-8859-1"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+</head>
+<body>
+     <form action="/shrusti/run1" method="POST">
+        Principal: <input name="principal" type="number" /><br>
+        Time : <input name="time" type="number" /><br>
+        Rate : <input name="rate" type="number" /><br>
+        SimpleInterest : <input name="si" type="number" />
+         <input name ="output" type="submit" />
+    </form>
+</body>
+</html>
+
+RESULT.JSP:
+
+<html>
+<head>
+<title>Yahoo!!</title>
+</head>
+<body>
+Output of Simple Interest is: ${si} 
+</body>
+</html>
