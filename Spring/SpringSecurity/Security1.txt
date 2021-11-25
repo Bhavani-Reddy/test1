@@ -1,0 +1,131 @@
+*************************************WELCOMECONTROLLER.JAVA************************************************
+
+package com.example.demo;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class WelcomeController {
+
+	@GetMapping(path="/")
+	public String welcome()
+	{
+		return ("<h1 style=\"color:blue;font-size:300%;\">Hello World!!</h1>");
+	}
+        @GetMapping(path="/admin")
+	public String admin()
+	{
+		return ("<h1 style=\"color:orange;font-size:300%;\">Hello World!!</h1>");
+	}
+}
+
+
+*******************************SECURITYCONFIGURATION.JAVA***************************************************
+
+package com.example.demo;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+@EnableWebSecurity
+public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
+	
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		
+		auth.inMemoryAuthentication()
+		  .withUser("Bhav")
+		  .password("1234")
+		  .roles("USER")
+		  .and()
+		  .withUser("Reddy")
+		  .password("Scooby")
+		  .roles("ADMIN");
+	}
+	
+	@Bean
+	public PasswordEncoder getPasswordEncoder()
+	{
+		return NoOpPasswordEncoder.getInstance();
+	}
+	@Override
+	protected void configure(HttpSecurity http) throws Exception{
+		http.authorizeRequests()
+		.antMatchers("/admin").hasRole("ADMIN")
+		.antMatchers("/user").hasAnyRole("USER","ADMIN")	
+		.antMatchers("/").permitAll()
+		.and().formLogin();
+	}
+}
+
+
+****************************************************POM.XML*************************************************
+
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>2.6.0</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>SpringBoot</groupId>
+	<artifactId>Spring-security</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name>Spring-security</name>
+	<description>course api with data for spring boot </description>
+	<properties>
+		<java.version>11</java.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+   			 <groupId>org.springframework.boot</groupId>
+  			  <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-jersey</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web-services</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.derby</groupId>
+			<artifactId>derby</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
