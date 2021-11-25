@@ -1,0 +1,150 @@
+EMPLOYEE.JAVA
+
+package com.example.demo.employee;
+
+public class Employee {
+
+	private Integer empId;
+	private String empName;
+	private String empDept;
+	private String empDesg;
+	private Integer empSal;
+	
+	public Employee(Integer empId, String empName, String empDept, String empDesg, Integer empSal) {
+		super();
+		this.empId = empId;
+		this.empName = empName;
+		this.empDept = empDept;
+		this.empDesg = empDesg;
+		this.empSal = empSal;
+	}
+
+	public Integer getEmpId() {
+		return empId;
+	}
+
+	public void setEmpId(Integer empId) {
+		this.empId = empId;
+	}
+
+	public String getEmpName() {
+		return empName;
+	}
+
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
+
+	public String getEmpDept() {
+		return empDept;
+	}
+
+	public void setEmpDept(String empDept) {
+		this.empDept = empDept;
+	}
+
+	public String getEmpDesg() {
+		return empDesg;
+	}
+
+	public void setEmpDesg(String empDesg) {
+		this.empDesg = empDesg;
+	}
+
+	public Integer getEmpSal() {
+		return empSal;
+	}
+
+	public void setEmpSal(Integer empSal) {
+		this.empSal = empSal;
+	}	
+}
+
+
+EMPLOYEECONTROLLER.JAVA
+
+package com.example.demo.employee;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+public class EmployeeController {
+
+	@Autowired
+	private EmployeeService empser;
+	
+	@RequestMapping("/employees")
+	public List<Employee> getAllEmployees(){
+		return empser.getAllEmployees();
+	}
+	@RequestMapping("/employees/{id}")
+	public Employee getEmployee(@PathVariable Integer id){
+		return empser.getEmployee(id);
+	}
+	@RequestMapping(method=RequestMethod.POST , value="/employees")
+	public void addEmployee(@RequestBody Employee emp) {
+		empser.addEmployee(emp);
+	}
+	@RequestMapping(method=RequestMethod.PUT , value="/employees/{id}")
+	public void updateEmployee(@RequestBody Employee emp, @PathVariable Integer id) {
+		empser.updateEmployee(id,emp);
+	}
+	@RequestMapping(method=RequestMethod.DELETE , value="/employees/{id}")
+	public void deleteEmployee(@RequestBody Employee emp, @PathVariable Integer id) {
+		empser.deleteEmployee(id,emp);
+	}
+}
+
+
+EMPLOYEESERVICE.JAVA
+
+package com.example.demo.employee;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class EmployeeService {
+
+	private List<Employee> employee = new ArrayList<>( Arrays.asList(
+			new Employee(1,"Bhavani","Development","Developer",2000),
+			new Employee(2,"Nikhitha","Development","Developer",3000),
+			new Employee(3,"Ragini","Testing","Tester",4000),
+			new Employee(4,"Kerrthana","Testing","Tester",4000)
+			));
+	
+	public List<Employee> getAllEmployees(){
+		return employee;	
+	}
+	public Employee getEmployee(Integer id){
+		return employee.stream().filter(t->t.getEmpId().equals(id)).findFirst().get();
+	}
+	public void addEmployee(Employee emp) {
+		employee.add(emp);
+	}
+    public void updateEmployee(Integer id, Employee emp) {
+		
+		for(int i=0;i<employee.size()+1;i++) {
+			Employee e = employee.get(id);
+			if(e.getEmpId().equals(id)) {
+				employee.set(i, emp);
+				return;
+			}
+		}
+	}
+    public void deleteEmployee(Integer id, Employee emp) {
+		employee.removeIf(t->t.getEmpId().equals(id));
+		
+	}
+}
+
